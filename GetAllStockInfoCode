@@ -1,0 +1,1769 @@
+Option Explicit
+Dim Datasheet As Worksheet
+Dim i, LR, LC As Long
+Private Sub BackToStart()
+Application.DisplayAlerts = False
+Dim ws As Worksheet
+For Each ws In ThisWorkbook.Worksheets
+    If ws.Name <> "Stocks" Then ws.Delete
+Next
+Application.DisplayAlerts = True
+
+End Sub
+Public Sub IDotheCounting()
+BackToStart
+Application.DisplayAlerts = False
+Application.ScreenUpdating = False
+Application.EnableEvents = False
+If ActiveSheet.Name <> "Stocks" Then
+    ActiveSheet.Name = "Stocks"
+ElseIf ActiveSheet.Name = "Stocks" Then
+ActiveSheet.Cells.Clear
+End If
+Sheets.Add
+ActiveSheet.Name = "Data"
+
+StockDataA
+StockDataB
+StockDataC
+StockDataD
+StockDataE
+StockDataF
+StockDataG
+StockDataH
+StockDataI
+StockDataJ
+StockDataK
+StockDataL
+StockDataM
+StockDataN
+StockDataO
+StockDataP
+StockDataQ
+StockDataR
+StockDataS
+StockDataT
+StockDataU
+StockDataV
+StockDataW
+StockDataX
+StockDataY
+StockDataZ
+
+ETFs
+AMEX
+NYSE
+NASDAQ
+FixNasdaqAmexEtfsNYSE
+AllSheetsTogether
+
+Application.ScreenUpdating = False
+Application.DisplayAlerts = False
+Dim ws As Worksheet
+For Each ws In ThisWorkbook.Worksheets
+    If ws.Name <> "Stocks" And ws.Name <> "Data" And ws.Name <> "Compiled Tickers" And ws.Name <> "ETFs" And ws.Name <> "NASDAQ" And ws.Name <> "NYSE" _
+        And ws.Name <> "AMEX" Then ws.Delete
+Next
+
+SortTickersAlphabetically
+CorrectExchangeColumn
+
+GetTickersReadyToPassToYahoo
+GetHeaderRowForYahooData
+ApplyFormattingToDataGathered
+
+
+CompiledAMEXNYSENASDAQ
+MoveEtfsToNYSEAMEXNASDAQandCompareLastSaleonStockDataSheet
+Application.DisplayAlerts = True
+Application.ScreenUpdating = True
+Application.DisplayStatusBar = True
+
+MsgBox "Done"
+End Sub
+Private Sub StockDataA()
+Sheets("Data").Cells.Clear
+Application.ScreenUpdating = False
+Application.DisplayAlerts = False
+Application.Calculation = xlCalculationManual
+Set Datasheet = Sheets("Data")
+Sheets("Stocks").Select
+
+For i = 1 To 5662
+LR = Sheets("Stocks").Cells(Rows.Count, 1).End(xlUp).Row + 1
+
+Datasheet.Cells.Clear
+If LR > 5662 Then GoTo Handler:
+With Datasheet.QueryTables.Add(Connection:="URL;http://stocks.tradingcharts.com/stocks/symbols/b/all/a/" & i, Destination:=Datasheet.Range("A1"))
+    .BackgroundQuery = True
+    .TablesOnlyFromHTML = False
+    .Refresh BackgroundQuery:=False
+    .SaveData = True
+End With
+
+Datasheet.Range("A1").CurrentRegion.TextToColumns Destination:=Datasheet.Range("A1"), DataType:=xlDelimited, _
+TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=True, _
+Semicolon:=False, Comma:=True, Space:=False, other:=False
+Datasheet.Range("A9:C33").Copy
+Sheets("Stocks").Range("A" & LR).PasteSpecial xlPasteValues
+
+Application.ScreenUpdating = True
+Application.Cursor = xlWait
+Application.DisplayStatusBar = True
+Application.StatusBar = "I am on page " & i & "..."
+Application.ScreenUpdating = False
+Next i
+Application.CutCopyMode = False
+Application.ScreenUpdating = True
+Application.DisplayAlerts = True
+Application.Calculation = xlCalculationAutomatic
+Handler:
+Sheets("Stocks").Rows("1:1").Delete Shift:=xlUp
+Sheets("Stocks").UsedRange.Copy
+Sheets.Add
+ActiveSheet.Range("A1").PasteSpecial xlPasteValues
+'msgbox "Done"
+End Sub
+Private Sub StockDataB()
+Sheets("Data").Cells.Clear
+Application.ScreenUpdating = False
+Application.DisplayAlerts = False
+Application.Calculation = xlCalculationManual
+Set Datasheet = Sheets("Data")
+Sheets("Stocks").Select
+
+For i = 1 To 3094
+LR = Sheets("Stocks").Cells(Rows.Count, 1).End(xlUp).Row + 1
+
+Datasheet.Cells.Clear
+If LR > 3094 Then GoTo Handler:
+With Datasheet.QueryTables.Add(Connection:="URL;http://stocks.tradingcharts.com/stocks/symbols/b/all/b/" & i, Destination:=Range("A1"))
+    .BackgroundQuery = True
+    .TablesOnlyFromHTML = False
+    .Refresh BackgroundQuery:=False
+    .SaveData = True
+End With
+
+Datasheet.Range("A1").CurrentRegion.TextToColumns Destination:=Datasheet.Range("A1"), DataType:=xlDelimited, _
+TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=True, _
+Semicolon:=False, Comma:=True, Space:=False, other:=False
+Datasheet.Range("A9:C33").Copy
+Sheets("Stocks").Range("A" & LR).PasteSpecial xlPasteValues
+
+Application.ScreenUpdating = True
+Application.Cursor = xlWait
+Application.DisplayStatusBar = True
+Application.StatusBar = "I am on page " & i & "..."
+Application.ScreenUpdating = False
+Next i
+Application.CutCopyMode = False
+Application.ScreenUpdating = True
+Application.DisplayAlerts = True
+Application.Calculation = xlCalculationAutomatic
+Handler:
+Sheets("Stocks").Rows("1:1").Delete Shift:=xlUp
+Sheets("Stocks").UsedRange.Copy
+Sheets.Add
+ActiveSheet.Range("A1").PasteSpecial xlPasteValues
+'msgbox "Done"
+End Sub
+Private Sub StockDataC()
+Sheets("Data").Cells.Clear
+Application.ScreenUpdating = False
+Application.DisplayAlerts = False
+Application.Calculation = xlCalculationManual
+Set Datasheet = Sheets("Data")
+Sheets("Stocks").Select
+
+For i = 1 To 5147
+LR = Sheets("Stocks").Cells(Rows.Count, 1).End(xlUp).Row + 1
+Datasheet.Cells.Clear
+If LR > 5147 Then GoTo Handler:
+With Datasheet.QueryTables.Add(Connection:="URL;http://stocks.tradingcharts.com/stocks/symbols/b/all/c/" & i, Destination:=Range("A1"))
+    .BackgroundQuery = True
+    .TablesOnlyFromHTML = False
+    .Refresh BackgroundQuery:=False
+    .SaveData = True
+End With
+
+Datasheet.Range("A1").CurrentRegion.TextToColumns Destination:=Datasheet.Range("A1"), DataType:=xlDelimited, _
+TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=True, _
+Semicolon:=False, Comma:=True, Space:=False, other:=False
+Datasheet.Range("A9:C33").Copy
+Sheets("Stocks").Range("A" & LR).PasteSpecial xlPasteValues
+
+Application.ScreenUpdating = True
+Application.Cursor = xlWait
+Application.DisplayStatusBar = True
+Application.StatusBar = "I am on page " & i & "..."
+Application.ScreenUpdating = False
+Next i
+Application.CutCopyMode = False
+Application.ScreenUpdating = True
+Application.DisplayAlerts = True
+Application.Calculation = xlCalculationAutomatic
+Handler:
+Sheets("Stocks").Rows("1:1").Delete Shift:=xlUp
+Sheets("Stocks").UsedRange.Copy
+Sheets.Add
+ActiveSheet.Range("A1").PasteSpecial xlPasteValues
+'msgbox "Done"
+End Sub
+Private Sub StockDataD()
+Sheets("Data").Cells.Clear
+Application.ScreenUpdating = False
+Application.DisplayAlerts = False
+Application.Calculation = xlCalculationManual
+Set Datasheet = Sheets("Data")
+Sheets("Stocks").Select
+
+For i = 1 To 2646
+LR = Sheets("Stocks").Cells(Rows.Count, 1).End(xlUp).Row + 1
+Datasheet.Cells.Clear
+If LR > 2646 Then GoTo Handler:
+With Datasheet.QueryTables.Add(Connection:="URL;http://stocks.tradingcharts.com/stocks/symbols/b/all/d/" & i, Destination:=Range("A1"))
+    .BackgroundQuery = True
+    .TablesOnlyFromHTML = False
+    .Refresh BackgroundQuery:=False
+    .SaveData = True
+End With
+Datasheet.Range("A1").CurrentRegion.TextToColumns Destination:=Datasheet.Range("A1"), DataType:=xlDelimited, _
+TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=True, _
+Semicolon:=False, Comma:=True, Space:=False, other:=False
+Datasheet.Range("A9:C33").Copy
+Sheets("Stocks").Range("A" & LR).PasteSpecial xlPasteValues
+
+Application.ScreenUpdating = True
+Application.Cursor = xlWait
+Application.DisplayStatusBar = True
+Application.StatusBar = "I am on page " & i & "..."
+Application.ScreenUpdating = False
+Next i
+Application.CutCopyMode = False
+Application.ScreenUpdating = True
+Application.DisplayAlerts = True
+Application.Calculation = xlCalculationAutomatic
+Handler:
+Sheets("Stocks").Rows("1:1").Delete Shift:=xlUp
+Sheets("Stocks").UsedRange.Copy
+Sheets.Add
+ActiveSheet.Range("A1").PasteSpecial xlPasteValues
+'msgbox "Done"
+End Sub
+Private Sub StockDataE()
+Sheets("Data").Cells.Clear
+Application.ScreenUpdating = False
+Application.DisplayAlerts = False
+Application.Calculation = xlCalculationManual
+Set Datasheet = Sheets("Data")
+Sheets("Stocks").Select
+
+For i = 1 To 2086
+LR = Sheets("Stocks").Cells(Rows.Count, 1).End(xlUp).Row + 1
+Datasheet.Cells.Clear
+If LR > 2086 Then GoTo Handler:
+With Datasheet.QueryTables.Add(Connection:="URL;http://stocks.tradingcharts.com/stocks/symbols/b/all/e/" & i, Destination:=Range("A1"))
+    .BackgroundQuery = True
+    .TablesOnlyFromHTML = False
+    .Refresh BackgroundQuery:=False
+    .SaveData = True
+End With
+
+Datasheet.Range("A1").CurrentRegion.TextToColumns Destination:=Datasheet.Range("A1"), DataType:=xlDelimited, _
+TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=True, _
+Semicolon:=False, Comma:=True, Space:=False, other:=False
+Datasheet.Range("A9:C33").Copy
+Sheets("Stocks").Range("A" & LR).PasteSpecial xlPasteValues
+
+Application.ScreenUpdating = True
+Application.Cursor = xlWait
+Application.DisplayStatusBar = True
+Application.StatusBar = "I am on page " & i & "..."
+Application.ScreenUpdating = False
+Next i
+Application.CutCopyMode = False
+Application.ScreenUpdating = True
+Application.DisplayAlerts = True
+Application.Calculation = xlCalculationAutomatic
+Handler:
+Sheets("Stocks").Rows("1:1").Delete Shift:=xlUp
+Sheets("Stocks").UsedRange.Copy
+Sheets.Add
+ActiveSheet.Range("A1").PasteSpecial xlPasteValues
+'msgbox "Done"
+End Sub
+Private Sub StockDataF()
+Sheets("Data").Cells.Clear
+Application.ScreenUpdating = False
+Application.DisplayAlerts = False
+Application.Calculation = xlCalculationManual
+Set Datasheet = Sheets("Data")
+Sheets("Stocks").Select
+
+For i = 1 To 3744
+LR = Sheets("Stocks").Cells(Rows.Count, 1).End(xlUp).Row + 1
+Datasheet.Cells.Clear
+If LR > 3744 Then GoTo Handler:
+With Datasheet.QueryTables.Add(Connection:="URL;http://stocks.tradingcharts.com/stocks/symbols/b/all/f/" & i, Destination:=Range("A1"))
+    .BackgroundQuery = True
+    .TablesOnlyFromHTML = False
+    .Refresh BackgroundQuery:=False
+    .SaveData = True
+End With
+
+Datasheet.Range("A1").CurrentRegion.TextToColumns Destination:=Datasheet.Range("A1"), DataType:=xlDelimited, _
+TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=True, _
+Semicolon:=False, Comma:=True, Space:=False, other:=False
+Datasheet.Range("A9:C33").Copy
+Sheets("Stocks").Range("A" & LR).PasteSpecial xlPasteValues
+
+Application.ScreenUpdating = True
+Application.Cursor = xlWait
+Application.DisplayStatusBar = True
+Application.StatusBar = "I am on page " & i & "..."
+Application.ScreenUpdating = False
+Next i
+Application.CutCopyMode = False
+Application.ScreenUpdating = True
+Application.DisplayAlerts = True
+Application.Calculation = xlCalculationAutomatic
+Handler:
+Sheets("Stocks").Rows("1:1").Delete Shift:=xlUp
+Sheets("Stocks").UsedRange.Copy
+Sheets.Add
+ActiveSheet.Range("A1").PasteSpecial xlPasteValues
+'msgbox "Done"
+End Sub
+Private Sub StockDataG()
+Sheets("Data").Cells.Clear
+Application.ScreenUpdating = False
+Application.DisplayAlerts = False
+Application.Calculation = xlCalculationManual
+Set Datasheet = Sheets("Data")
+Sheets("Stocks").Select
+
+For i = 1 To 2721
+LR = Sheets("Stocks").Cells(Rows.Count, 1).End(xlUp).Row + 1
+Datasheet.Cells.Clear
+If LR > 2721 Then GoTo Handler:
+With Datasheet.QueryTables.Add(Connection:="URL;http://stocks.tradingcharts.com/stocks/symbols/b/all/g/" & i, Destination:=Range("A1"))
+    .BackgroundQuery = True
+    .TablesOnlyFromHTML = False
+    .Refresh BackgroundQuery:=False
+    .SaveData = True
+End With
+
+Datasheet.Range("A1").CurrentRegion.TextToColumns Destination:=Datasheet.Range("A1"), DataType:=xlDelimited, _
+TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=True, _
+Semicolon:=False, Comma:=True, Space:=False, other:=False
+Datasheet.Range("A9:C33").Copy
+Sheets("Stocks").Range("A" & LR).PasteSpecial xlPasteValues
+
+Application.ScreenUpdating = True
+Application.Cursor = xlWait
+Application.DisplayStatusBar = True
+Application.StatusBar = "I am on page " & i & "..."
+Application.ScreenUpdating = False
+Next i
+Application.CutCopyMode = False
+Application.ScreenUpdating = True
+Application.DisplayAlerts = True
+Application.Calculation = xlCalculationAutomatic
+Handler:
+Sheets("Stocks").Rows("1:1").Delete Shift:=xlUp
+Sheets("Stocks").UsedRange.Copy
+Sheets.Add
+ActiveSheet.Range("A1").PasteSpecial xlPasteValues
+'msgbox "Done"
+End Sub
+Private Sub StockDataH()
+Sheets("Data").Cells.Clear
+Application.ScreenUpdating = False
+Application.DisplayAlerts = False
+Application.Calculation = xlCalculationManual
+Set Datasheet = Sheets("Data")
+Sheets("Stocks").Select
+
+For i = 1 To 1913
+LR = Sheets("Stocks").Cells(Rows.Count, 1).End(xlUp).Row + 1
+Datasheet.Cells.Clear
+If LR > 1913 Then GoTo Handler:
+With Datasheet.QueryTables.Add(Connection:="URL;http://stocks.tradingcharts.com/stocks/symbols/b/all/h/" & i, Destination:=Range("A1"))
+    .BackgroundQuery = True
+    .TablesOnlyFromHTML = False
+    .Refresh BackgroundQuery:=False
+    .SaveData = True
+End With
+
+Datasheet.Range("A1").CurrentRegion.TextToColumns Destination:=Datasheet.Range("A1"), DataType:=xlDelimited, _
+TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=True, _
+Semicolon:=False, Comma:=True, Space:=False, other:=False
+Datasheet.Range("A9:C33").Copy
+Sheets("Stocks").Range("A" & LR).PasteSpecial xlPasteValues
+
+Application.ScreenUpdating = True
+Application.Cursor = xlWait
+Application.DisplayStatusBar = True
+Application.StatusBar = "I am on page " & i & "..."
+Application.ScreenUpdating = False
+Next i
+Application.CutCopyMode = False
+Application.ScreenUpdating = True
+Application.DisplayAlerts = True
+Application.Calculation = xlCalculationAutomatic
+Handler:
+Sheets("Stocks").Rows("1:1").Delete Shift:=xlUp
+Sheets("Stocks").UsedRange.Copy
+Sheets.Add
+ActiveSheet.Range("A1").PasteSpecial xlPasteValues
+'msgbox "Done"
+End Sub
+Private Sub StockDataI()
+Sheets("Data").Cells.Clear
+Application.ScreenUpdating = False
+Application.DisplayAlerts = False
+Application.Calculation = xlCalculationManual
+Set Datasheet = Sheets("Data")
+Sheets("Stocks").Select
+
+For i = 1 To 2802
+LR = Sheets("Stocks").Cells(Rows.Count, 1).End(xlUp).Row + 1
+Datasheet.Cells.Clear
+If LR > 2802 Then GoTo Handler:
+With Datasheet.QueryTables.Add(Connection:="URL;http://stocks.tradingcharts.com/stocks/symbols/b/all/i/" & i, Destination:=Range("A1"))
+    .BackgroundQuery = True
+    .TablesOnlyFromHTML = False
+    .Refresh BackgroundQuery:=False
+    .SaveData = True
+End With
+
+Datasheet.Range("A1").CurrentRegion.TextToColumns Destination:=Datasheet.Range("A1"), DataType:=xlDelimited, _
+TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=True, _
+Semicolon:=False, Comma:=True, Space:=False, other:=False
+Datasheet.Range("A9:C33").Copy
+Sheets("Stocks").Range("A" & LR).PasteSpecial xlPasteValues
+
+Application.ScreenUpdating = True
+Application.Cursor = xlWait
+Application.DisplayStatusBar = True
+Application.StatusBar = "I am on page " & i & "..."
+Application.ScreenUpdating = False
+Next i
+Application.CutCopyMode = False
+Application.ScreenUpdating = True
+Application.DisplayAlerts = True
+Application.Calculation = xlCalculationAutomatic
+Handler:
+Sheets("Stocks").Rows("1:1").Delete Shift:=xlUp
+Sheets("Stocks").UsedRange.Copy
+Sheets.Add
+ActiveSheet.Range("A1").PasteSpecial xlPasteValues
+'msgbox "Done"
+End Sub
+Private Sub StockDataJ()
+Sheets("Data").Cells.Clear
+Application.ScreenUpdating = False
+Application.DisplayAlerts = False
+Application.Calculation = xlCalculationManual
+Set Datasheet = Sheets("Data")
+Sheets("Stocks").Select
+
+For i = 1 To 2298
+LR = Sheets("Stocks").Cells(Rows.Count, 1).End(xlUp).Row + 1
+Datasheet.Cells.Clear
+If LR > 2298 Then GoTo Handler:
+With Datasheet.QueryTables.Add(Connection:="URL;http://stocks.tradingcharts.com/stocks/symbols/b/all/j/" & i, Destination:=Range("A1"))
+    .BackgroundQuery = True
+    .TablesOnlyFromHTML = False
+    .Refresh BackgroundQuery:=False
+    .SaveData = True
+End With
+
+Datasheet.Range("A1").CurrentRegion.TextToColumns Destination:=Datasheet.Range("A1"), DataType:=xlDelimited, _
+TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=True, _
+Semicolon:=False, Comma:=True, Space:=False, other:=False
+Datasheet.Range("A9:C33").Copy
+Sheets("Stocks").Range("A" & LR).PasteSpecial xlPasteValues
+
+Application.ScreenUpdating = True
+Application.Cursor = xlWait
+Application.DisplayStatusBar = True
+Application.StatusBar = "I am on page " & i & "..."
+Application.ScreenUpdating = False
+Next i
+Application.CutCopyMode = False
+Application.ScreenUpdating = True
+Application.DisplayAlerts = True
+Application.Calculation = xlCalculationAutomatic
+Handler:
+Sheets("Stocks").Rows("1:1").Delete Shift:=xlUp
+Sheets("Stocks").UsedRange.Copy
+Sheets.Add
+ActiveSheet.Range("A1").PasteSpecial xlPasteValues
+'msgbox "Done"
+End Sub
+Private Sub StockDataK()
+Sheets("Data").Cells.Clear
+Application.ScreenUpdating = False
+Application.DisplayAlerts = False
+Application.Calculation = xlCalculationManual
+Set Datasheet = Sheets("Data")
+Sheets("Stocks").Select
+
+For i = 1 To 503
+LR = Sheets("Stocks").Cells(Rows.Count, 1).End(xlUp).Row + 1
+Datasheet.Cells.Clear
+If LR > 503 Then GoTo Handler:
+With Datasheet.QueryTables.Add(Connection:="URL;http://stocks.tradingcharts.com/stocks/symbols/b/all/k/" & i, Destination:=Range("A1"))
+    .BackgroundQuery = True
+    .TablesOnlyFromHTML = False
+    .Refresh BackgroundQuery:=False
+    .SaveData = True
+End With
+
+Datasheet.Range("A1").CurrentRegion.TextToColumns Destination:=Datasheet.Range("A1"), DataType:=xlDelimited, _
+TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=True, _
+Semicolon:=False, Comma:=True, Space:=False, other:=False
+Datasheet.Range("A9:C33").Copy
+Sheets("Stocks").Range("A" & LR).PasteSpecial xlPasteValues
+
+Application.ScreenUpdating = True
+Application.Cursor = xlWait
+Application.DisplayStatusBar = True
+Application.StatusBar = "I am on page " & i & "..."
+Application.ScreenUpdating = False
+Next i
+Application.CutCopyMode = False
+Application.ScreenUpdating = True
+Application.DisplayAlerts = True
+Application.Calculation = xlCalculationAutomatic
+Handler:
+Sheets("Stocks").Rows("1:1").Delete Shift:=xlUp
+Sheets("Stocks").UsedRange.Copy
+Sheets.Add
+ActiveSheet.Range("A1").PasteSpecial xlPasteValues
+'msgbox "Done"
+End Sub
+Private Sub StockDataL()
+Sheets("Data").Cells.Clear
+Application.ScreenUpdating = False
+Application.DisplayAlerts = False
+Application.Calculation = xlCalculationManual
+Set Datasheet = Sheets("Data")
+Sheets("Stocks").Select
+
+For i = 1 To 1573
+LR = Sheets("Stocks").Cells(Rows.Count, 1).End(xlUp).Row + 1
+Datasheet.Cells.Clear
+If LR > 1573 Then GoTo Handler:
+With Datasheet.QueryTables.Add(Connection:="URL;http://stocks.tradingcharts.com/stocks/symbols/b/all/l/" & i, Destination:=Range("A1"))
+    .BackgroundQuery = True
+    .TablesOnlyFromHTML = False
+    .Refresh BackgroundQuery:=False
+    .SaveData = True
+End With
+
+Datasheet.Range("A1").CurrentRegion.TextToColumns Destination:=Datasheet.Range("A1"), DataType:=xlDelimited, _
+TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=True, _
+Semicolon:=False, Comma:=True, Space:=False, other:=False
+Datasheet.Range("A9:C33").Copy
+Sheets("Stocks").Range("A" & LR).PasteSpecial xlPasteValues
+
+Application.ScreenUpdating = True
+Application.Cursor = xlWait
+Application.DisplayStatusBar = True
+Application.StatusBar = "I am on page " & i & "..."
+Application.ScreenUpdating = False
+Next i
+Application.CutCopyMode = False
+Application.ScreenUpdating = True
+Application.DisplayAlerts = True
+Application.Calculation = xlCalculationAutomatic
+Handler:
+Sheets("Stocks").Rows("1:1").Delete Shift:=xlUp
+Sheets("Stocks").UsedRange.Copy
+Sheets.Add
+ActiveSheet.Range("A1").PasteSpecial xlPasteValues
+'msgbox "Done"
+End Sub
+Private Sub StockDataM()
+Sheets("Data").Cells.Clear
+Application.ScreenUpdating = False
+Application.DisplayAlerts = False
+Application.Calculation = xlCalculationManual
+Set Datasheet = Sheets("Data")
+Sheets("Stocks").Select
+
+For i = 1 To 4371
+LR = Sheets("Stocks").Cells(Rows.Count, 1).End(xlUp).Row + 1
+Datasheet.Cells.Clear
+If LR > 4371 Then GoTo Handler:
+With Datasheet.QueryTables.Add(Connection:="URL;http://stocks.tradingcharts.com/stocks/symbols/b/all/m/" & i, Destination:=Range("A1"))
+    .BackgroundQuery = True
+    .TablesOnlyFromHTML = False
+    .Refresh BackgroundQuery:=False
+    .SaveData = True
+End With
+
+Datasheet.Range("A1").CurrentRegion.TextToColumns Destination:=Datasheet.Range("A1"), DataType:=xlDelimited, _
+TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=True, _
+Semicolon:=False, Comma:=True, Space:=False, other:=False
+Datasheet.Range("A9:C33").Copy
+Sheets("Stocks").Range("A" & LR).PasteSpecial xlPasteValues
+
+Application.ScreenUpdating = True
+Application.Cursor = xlWait
+Application.DisplayStatusBar = True
+Application.StatusBar = "I am on page " & i & "..."
+Application.ScreenUpdating = False
+Next i
+Application.CutCopyMode = False
+Application.ScreenUpdating = True
+Application.DisplayAlerts = True
+Application.Calculation = xlCalculationAutomatic
+Handler:
+Sheets("Stocks").Rows("1:1").Delete Shift:=xlUp
+Sheets("Stocks").UsedRange.Copy
+Sheets.Add
+ActiveSheet.Range("A1").PasteSpecial xlPasteValues
+'msgbox "Done"
+End Sub
+Private Sub StockDataN()
+Sheets("Data").Cells.Clear
+Application.ScreenUpdating = False
+Application.DisplayAlerts = False
+Application.Calculation = xlCalculationManual
+Set Datasheet = Sheets("Data")
+Sheets("Stocks").Select
+
+For i = 1 To 2743
+LR = Sheets("Stocks").Cells(Rows.Count, 1).End(xlUp).Row + 1
+Datasheet.Cells.Clear
+If LR > 2743 Then GoTo Handler:
+With Datasheet.QueryTables.Add(Connection:="URL;http://stocks.tradingcharts.com/stocks/symbols/b/all/n/" & i, Destination:=Range("A1"))
+    .BackgroundQuery = True
+    .TablesOnlyFromHTML = False
+    .Refresh BackgroundQuery:=False
+    .SaveData = True
+End With
+
+Datasheet.Range("A1").CurrentRegion.TextToColumns Destination:=Datasheet.Range("A1"), DataType:=xlDelimited, _
+TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=True, _
+Semicolon:=False, Comma:=True, Space:=False, other:=False
+Datasheet.Range("A9:C33").Copy
+Sheets("Stocks").Range("A" & LR).PasteSpecial xlPasteValues
+
+Application.ScreenUpdating = True
+Application.Cursor = xlWait
+Application.DisplayStatusBar = True
+Application.StatusBar = "I am on page " & i & "..."
+Application.ScreenUpdating = False
+Next i
+Application.CutCopyMode = False
+Application.ScreenUpdating = True
+Application.DisplayAlerts = True
+Application.Calculation = xlCalculationAutomatic
+Handler:
+Sheets("Stocks").Rows("1:1").Delete Shift:=xlUp
+Sheets("Stocks").UsedRange.Copy
+Sheets.Add
+ActiveSheet.Range("A1").PasteSpecial xlPasteValues
+'msgbox "Done"
+End Sub
+Private Sub StockDataO()
+Sheets("Data").Cells.Clear
+Application.ScreenUpdating = False
+Application.DisplayAlerts = False
+Application.Calculation = xlCalculationManual
+Set Datasheet = Sheets("Data")
+Sheets("Stocks").Select
+
+For i = 1 To 1220
+LR = Sheets("Stocks").Cells(Rows.Count, 1).End(xlUp).Row + 1
+Datasheet.Cells.Clear
+If LR > 1220 Then GoTo Handler:
+With Datasheet.QueryTables.Add(Connection:="URL;http://stocks.tradingcharts.com/stocks/symbols/b/all/o/" & i, Destination:=Range("A1"))
+    .BackgroundQuery = True
+    .TablesOnlyFromHTML = False
+    .Refresh BackgroundQuery:=False
+    .SaveData = True
+End With
+
+Datasheet.Range("A1").CurrentRegion.TextToColumns Destination:=Datasheet.Range("A1"), DataType:=xlDelimited, _
+TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=True, _
+Semicolon:=False, Comma:=True, Space:=False, other:=False
+Datasheet.Range("A9:C33").Copy
+Sheets("Stocks").Range("A" & LR).PasteSpecial xlPasteValues
+
+Application.ScreenUpdating = True
+Application.Cursor = xlWait
+Application.DisplayStatusBar = True
+Application.StatusBar = "I am on page " & i & "..."
+Application.ScreenUpdating = False
+Next i
+Application.CutCopyMode = False
+Application.ScreenUpdating = True
+Application.DisplayAlerts = True
+Application.Calculation = xlCalculationAutomatic
+Handler:
+Sheets("Stocks").Rows("1:1").Delete Shift:=xlUp
+Sheets("Stocks").UsedRange.Copy
+Sheets.Add
+ActiveSheet.Range("A1").PasteSpecial xlPasteValues
+'msgbox "Done"
+End Sub
+Private Sub StockDataP()
+Sheets("Data").Cells.Clear
+Application.ScreenUpdating = False
+Application.DisplayAlerts = False
+Application.Calculation = xlCalculationManual
+Set Datasheet = Sheets("Data")
+Sheets("Stocks").Select
+
+For i = 1 To 4931
+LR = Sheets("Stocks").Cells(Rows.Count, 1).End(xlUp).Row + 1
+Datasheet.Cells.Clear
+If LR > 4931 Then GoTo Handler
+With Datasheet.QueryTables.Add(Connection:="URL;http://stocks.tradingcharts.com/stocks/symbols/b/all/p/" & i, Destination:=Range("A1"))
+    .BackgroundQuery = True
+    .TablesOnlyFromHTML = False
+    .Refresh BackgroundQuery:=False
+    .SaveData = True
+End With
+
+Datasheet.Range("A1").CurrentRegion.TextToColumns Destination:=Datasheet.Range("A1"), DataType:=xlDelimited, _
+TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=True, _
+Semicolon:=False, Comma:=True, Space:=False, other:=False
+Datasheet.Range("A9:C33").Copy
+Sheets("Stocks").Range("A" & LR).PasteSpecial xlPasteValues
+
+Application.ScreenUpdating = True
+Application.Cursor = xlWait
+Application.DisplayStatusBar = True
+Application.StatusBar = "I am on page " & i & "..."
+Application.ScreenUpdating = False
+Next i
+Application.CutCopyMode = False
+Application.ScreenUpdating = True
+Application.DisplayAlerts = True
+Application.Calculation = xlCalculationAutomatic
+Handler:
+Sheets("Stocks").Rows("1:1").Delete Shift:=xlUp
+Sheets("Stocks").UsedRange.Copy
+Sheets.Add
+ActiveSheet.Range("A1").PasteSpecial xlPasteValues
+'msgbox "Done"
+End Sub
+Private Sub StockDataQ()
+Sheets("Data").Cells.Clear
+Application.ScreenUpdating = False
+Application.DisplayAlerts = False
+Application.Calculation = xlCalculationManual
+Set Datasheet = Sheets("Data")
+Sheets("Stocks").Select
+
+For i = 1 To 316
+LR = Sheets("Stocks").Cells(Rows.Count, 1).End(xlUp).Row + 1
+Datasheet.Cells.Clear
+If LR > 316 Then GoTo Handler:
+With Datasheet.QueryTables.Add(Connection:="URL;http://stocks.tradingcharts.com/stocks/symbols/b/all/q/" & i, Destination:=Range("A1"))
+    .BackgroundQuery = True
+    .TablesOnlyFromHTML = False
+    .Refresh BackgroundQuery:=False
+    .SaveData = True
+End With
+
+Datasheet.Range("A1").CurrentRegion.TextToColumns Destination:=Datasheet.Range("A1"), DataType:=xlDelimited, _
+TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=True, _
+Semicolon:=False, Comma:=True, Space:=False, other:=False
+Datasheet.Range("A9:C33").Copy
+Sheets("Stocks").Range("A" & LR).PasteSpecial xlPasteValues
+
+Application.ScreenUpdating = True
+Application.Cursor = xlWait
+Application.DisplayStatusBar = True
+Application.StatusBar = "I am on page " & i & "..."
+Application.ScreenUpdating = False
+Next i
+Application.CutCopyMode = False
+Application.ScreenUpdating = True
+Application.DisplayAlerts = True
+Application.Calculation = xlCalculationAutomatic
+Handler:
+Sheets("Stocks").Rows("1:1").Delete Shift:=xlUp
+Sheets("Stocks").UsedRange.Copy
+Sheets.Add
+ActiveSheet.Range("A1").PasteSpecial xlPasteValues
+'msgbox "Done"
+End Sub
+Private Sub StockDataR()
+Sheets("Data").Cells.Clear
+Application.ScreenUpdating = False
+Application.DisplayAlerts = False
+Application.Calculation = xlCalculationManual
+Set Datasheet = Sheets("Data")
+Sheets("Stocks").Select
+
+For i = 1 To 2344
+LR = Sheets("Stocks").Cells(Rows.Count, 1).End(xlUp).Row + 1
+Datasheet.Cells.Clear
+If LR > 2344 Then GoTo Handler:
+With Datasheet.QueryTables.Add(Connection:="URL;http://stocks.tradingcharts.com/stocks/symbols/b/all/r/" & i, Destination:=Range("A1"))
+    .BackgroundQuery = True
+    .TablesOnlyFromHTML = False
+    .Refresh BackgroundQuery:=False
+    .SaveData = True
+End With
+
+Datasheet.Range("A1").CurrentRegion.TextToColumns Destination:=Datasheet.Range("A1"), DataType:=xlDelimited, _
+TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=True, _
+Semicolon:=False, Comma:=True, Space:=False, other:=False
+Datasheet.Range("A9:C33").Copy
+Sheets("Stocks").Range("A" & LR).PasteSpecial xlPasteValues
+
+Application.ScreenUpdating = True
+Application.Cursor = xlWait
+Application.DisplayStatusBar = True
+Application.StatusBar = "I am on page " & i & "..."
+Application.ScreenUpdating = False
+Next i
+Application.CutCopyMode = False
+Application.ScreenUpdating = True
+Application.DisplayAlerts = True
+Application.Calculation = xlCalculationAutomatic
+Handler:
+Sheets("Stocks").Rows("1:1").Delete Shift:=xlUp
+Sheets("Stocks").UsedRange.Copy
+Sheets.Add
+ActiveSheet.Range("A1").PasteSpecial xlPasteValues
+'msgbox "Done"
+End Sub
+Private Sub StockDataS()
+Sheets("Data").Cells.Clear
+Application.ScreenUpdating = False
+Application.DisplayAlerts = False
+Application.Calculation = xlCalculationManual
+Set Datasheet = Sheets("Data")
+Sheets("Stocks").Select
+
+For i = 1 To 4108
+LR = Sheets("Stocks").Cells(Rows.Count, 1).End(xlUp).Row + 1
+Datasheet.Cells.Clear
+If LR > 4108 Then GoTo Handler:
+With Datasheet.QueryTables.Add(Connection:="URL;http://stocks.tradingcharts.com/stocks/symbols/b/all/s/" & i, Destination:=Range("A1"))
+    .BackgroundQuery = True
+    .TablesOnlyFromHTML = False
+    .Refresh BackgroundQuery:=False
+    .SaveData = True
+End With
+
+Datasheet.Range("A1").CurrentRegion.TextToColumns Destination:=Datasheet.Range("A1"), DataType:=xlDelimited, _
+TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=True, _
+Semicolon:=False, Comma:=True, Space:=False, other:=False
+Datasheet.Range("A9:C33").Copy
+Sheets("Stocks").Range("A" & LR).PasteSpecial xlPasteValues
+
+Application.ScreenUpdating = True
+Application.Cursor = xlWait
+Application.DisplayStatusBar = True
+Application.StatusBar = "I am on page " & i & "..."
+Application.ScreenUpdating = False
+Next i
+Application.CutCopyMode = False
+Application.ScreenUpdating = True
+Application.DisplayAlerts = True
+Application.Calculation = xlCalculationAutomatic
+Handler:
+Sheets("Stocks").Rows("1:1").Delete Shift:=xlUp
+Sheets("Stocks").UsedRange.Copy
+Sheets.Add
+ActiveSheet.Range("A1").PasteSpecial xlPasteValues
+'msgbox "Done"
+End Sub
+Private Sub StockDataT()
+Sheets("Data").Cells.Clear
+Application.ScreenUpdating = False
+Application.DisplayAlerts = False
+Application.Calculation = xlCalculationManual
+Set Datasheet = Sheets("Data")
+Sheets("Stocks").Select
+
+For i = 1 To 3516
+LR = Sheets("Stocks").Cells(Rows.Count, 1).End(xlUp).Row + 1
+Datasheet.Cells.Clear
+If LR > 3516 Then GoTo Handler:
+With Datasheet.QueryTables.Add(Connection:="URL;http://stocks.tradingcharts.com/stocks/symbols/b/all/t/" & i, Destination:=Range("A1"))
+    .BackgroundQuery = True
+    .TablesOnlyFromHTML = False
+    .Refresh BackgroundQuery:=False
+    .SaveData = True
+End With
+
+Datasheet.Range("A1").CurrentRegion.TextToColumns Destination:=Datasheet.Range("A1"), DataType:=xlDelimited, _
+TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=True, _
+Semicolon:=False, Comma:=True, Space:=False, other:=False
+Datasheet.Range("A9:C33").Copy
+Sheets("Stocks").Range("A" & LR).PasteSpecial xlPasteValues
+
+Application.ScreenUpdating = True
+Application.Cursor = xlWait
+Application.DisplayStatusBar = True
+Application.StatusBar = "I am on page " & i & "..."
+Application.ScreenUpdating = False
+Next i
+Application.CutCopyMode = False
+Application.ScreenUpdating = True
+Application.DisplayAlerts = True
+Application.Calculation = xlCalculationAutomatic
+Handler:
+Sheets("Stocks").Rows("1:1").Delete Shift:=xlUp
+Sheets("Stocks").UsedRange.Copy
+Sheets.Add
+ActiveSheet.Range("A1").PasteSpecial xlPasteValues
+'msgbox "Done"
+End Sub
+Private Sub StockDataU()
+Sheets("Data").Cells.Clear
+Application.ScreenUpdating = False
+Application.DisplayAlerts = False
+Application.Calculation = xlCalculationManual
+Set Datasheet = Sheets("Data")
+Sheets("Stocks").Select
+
+For i = 1 To 849
+LR = Sheets("Stocks").Cells(Rows.Count, 1).End(xlUp).Row + 1
+Datasheet.Cells.Clear
+If LR > 849 Then GoTo Handler:
+With Datasheet.QueryTables.Add(Connection:="URL;http://stocks.tradingcharts.com/stocks/symbols/b/all/u/" & i, Destination:=Range("A1"))
+    .BackgroundQuery = True
+    .TablesOnlyFromHTML = False
+    .Refresh BackgroundQuery:=False
+    .SaveData = True
+End With
+
+Datasheet.Range("A1").CurrentRegion.TextToColumns Destination:=Datasheet.Range("A1"), DataType:=xlDelimited, _
+TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=True, _
+Semicolon:=False, Comma:=True, Space:=False, other:=False
+Datasheet.Range("A9:C33").Copy
+Sheets("Stocks").Range("A" & LR).PasteSpecial xlPasteValues
+
+Application.ScreenUpdating = True
+Application.Cursor = xlWait
+Application.DisplayStatusBar = True
+Application.StatusBar = "I am on page " & i & "..."
+Application.ScreenUpdating = False
+Next i
+Application.CutCopyMode = False
+Application.ScreenUpdating = True
+Application.DisplayAlerts = True
+Application.Calculation = xlCalculationAutomatic
+Handler:
+Sheets("Stocks").Rows("1:1").Delete Shift:=xlUp
+Sheets("Stocks").UsedRange.Copy
+Sheets.Add
+ActiveSheet.Range("A1").PasteSpecial xlPasteValues
+'msgbox "Done"
+End Sub
+Private Sub StockDataV()
+Sheets("Data").Cells.Clear
+Application.ScreenUpdating = False
+Application.DisplayAlerts = False
+Application.Calculation = xlCalculationManual
+Set Datasheet = Sheets("Data")
+Sheets("Stocks").Select
+
+For i = 1 To 2053
+LR = Sheets("Stocks").Cells(Rows.Count, 1).End(xlUp).Row + 1
+Datasheet.Cells.Clear
+If LR > 2053 Then GoTo Handler:
+With Datasheet.QueryTables.Add(Connection:="URL;http://stocks.tradingcharts.com/stocks/symbols/b/all/v/" & i, Destination:=Range("A1"))
+    .BackgroundQuery = True
+    .TablesOnlyFromHTML = False
+    .Refresh BackgroundQuery:=False
+    .SaveData = True
+End With
+
+Datasheet.Range("A1").CurrentRegion.TextToColumns Destination:=Datasheet.Range("A1"), DataType:=xlDelimited, _
+TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=True, _
+Semicolon:=False, Comma:=True, Space:=False, other:=False
+Datasheet.Range("A9:C33").Copy
+Sheets("Stocks").Range("A" & LR).PasteSpecial xlPasteValues
+
+Application.ScreenUpdating = True
+Application.Cursor = xlWait
+Application.DisplayStatusBar = True
+Application.StatusBar = "I am on page " & i & "..."
+Application.ScreenUpdating = False
+Next i
+Application.CutCopyMode = False
+Application.ScreenUpdating = True
+Application.DisplayAlerts = True
+Application.Calculation = xlCalculationAutomatic
+Handler:
+Sheets("Stocks").Rows("1:1").Delete Shift:=xlUp
+Sheets("Stocks").UsedRange.Copy
+Sheets.Add
+ActiveSheet.Range("A1").PasteSpecial xlPasteValues
+'msgbox "Done"
+End Sub
+Private Sub StockDataW()
+Sheets("Data").Cells.Clear
+Application.ScreenUpdating = False
+Application.DisplayAlerts = False
+Application.Calculation = xlCalculationManual
+Set Datasheet = Sheets("Data")
+Sheets("Stocks").Select
+
+For i = 1 To 2018
+LR = Sheets("Stocks").Cells(Rows.Count, 1).End(xlUp).Row + 1
+Datasheet.Cells.Clear
+If LR > 2018 Then GoTo Handler:
+With Datasheet.QueryTables.Add(Connection:="URL;http://stocks.tradingcharts.com/stocks/symbols/b/all/w/" & i, Destination:=Range("A1"))
+    .BackgroundQuery = True
+    .TablesOnlyFromHTML = False
+    .Refresh BackgroundQuery:=False
+    .SaveData = True
+End With
+
+Datasheet.Range("A1").CurrentRegion.TextToColumns Destination:=Datasheet.Range("A1"), DataType:=xlDelimited, _
+TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=True, _
+Semicolon:=False, Comma:=True, Space:=False, other:=False
+Datasheet.Range("A9:C33").Copy
+Sheets("Stocks").Range("A" & LR).PasteSpecial xlPasteValues
+
+Application.ScreenUpdating = True
+Application.Cursor = xlWait
+Application.DisplayStatusBar = True
+Application.StatusBar = "I am on page " & i & "..."
+Application.ScreenUpdating = False
+Next i
+Application.CutCopyMode = False
+Application.ScreenUpdating = True
+Application.DisplayAlerts = True
+Application.Calculation = xlCalculationAutomatic
+Handler:
+Sheets("Stocks").Rows("1:1").Delete Shift:=xlUp
+Sheets("Stocks").UsedRange.Copy
+Sheets.Add
+ActiveSheet.Range("A1").PasteSpecial xlPasteValues
+'msgbox "Done"
+End Sub
+Private Sub StockDataX()
+Sheets("Data").Cells.Clear
+Application.ScreenUpdating = False
+Application.DisplayAlerts = False
+Application.Calculation = xlCalculationManual
+Set Datasheet = Sheets("Data")
+Sheets("Stocks").Select
+
+For i = 1 To 113
+LR = Sheets("Stocks").Cells(Rows.Count, 1).End(xlUp).Row + 1
+Datasheet.Cells.Clear
+If LR > 113 Then GoTo Handler:
+With Datasheet.QueryTables.Add(Connection:="URL;http://stocks.tradingcharts.com/stocks/symbols/b/all/x/" & i, Destination:=Range("A1"))
+    .BackgroundQuery = True
+    .TablesOnlyFromHTML = False
+    .Refresh BackgroundQuery:=False
+    .SaveData = True
+End With
+
+Datasheet.Range("A1").CurrentRegion.TextToColumns Destination:=Datasheet.Range("A1"), DataType:=xlDelimited, _
+TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=True, _
+Semicolon:=False, Comma:=True, Space:=False, other:=False
+Datasheet.Range("A9:C33").Copy
+Sheets("Stocks").Range("A" & LR).PasteSpecial xlPasteValues
+
+Application.ScreenUpdating = True
+Application.Cursor = xlWait
+Application.DisplayStatusBar = True
+Application.StatusBar = "I am on page " & i & "..."
+Application.ScreenUpdating = False
+Next i
+Application.CutCopyMode = False
+Application.ScreenUpdating = True
+Application.DisplayAlerts = True
+Application.Calculation = xlCalculationAutomatic
+Handler:
+Sheets("Stocks").Rows("1:1").Delete Shift:=xlUp
+Sheets("Stocks").UsedRange.Copy
+Sheets.Add
+ActiveSheet.Range("A1").PasteSpecial xlPasteValues
+'msgbox "Done"
+End Sub
+Private Sub StockDataY()
+Sheets("Data").Cells.Clear
+Application.ScreenUpdating = False
+Application.DisplayAlerts = False
+Application.Calculation = xlCalculationManual
+Set Datasheet = Sheets("Data")
+Sheets("Stocks").Select
+For i = 1 To 97
+LR = Sheets("Stocks").Cells(Rows.Count, 1).End(xlUp).Row + 1
+Datasheet.Cells.Clear
+If LR > 97 Then GoTo Handler:
+With Datasheet.QueryTables.Add(Connection:="URL;http://stocks.tradingcharts.com/stocks/symbols/b/all/y/" & i, Destination:=Range("A1"))
+    .BackgroundQuery = True
+    .TablesOnlyFromHTML = False
+    .Refresh BackgroundQuery:=False
+    .SaveData = True
+End With
+
+Datasheet.Range("A1").CurrentRegion.TextToColumns Destination:=Datasheet.Range("A1"), DataType:=xlDelimited, _
+TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=True, _
+Semicolon:=False, Comma:=True, Space:=False, other:=False
+Datasheet.Range("A9:C33").Copy
+Sheets("Stocks").Range("A" & LR).PasteSpecial xlPasteValues
+
+Application.ScreenUpdating = True
+Application.Cursor = xlWait
+Application.DisplayStatusBar = True
+Application.StatusBar = "I am on page " & i & "..."
+Application.ScreenUpdating = False
+Next i
+Application.CutCopyMode = False
+Application.ScreenUpdating = True
+Application.DisplayAlerts = True
+Application.Calculation = xlCalculationAutomatic
+Handler:
+Sheets("Stocks").Rows("1:1").Delete Shift:=xlUp
+Sheets("Stocks").UsedRange.Copy
+Sheets.Add
+ActiveSheet.Range("A1").PasteSpecial xlPasteValues
+'msgbox "Done"
+End Sub
+Private Sub StockDataZ()
+Sheets("Data").Cells.Clear
+Application.ScreenUpdating = False
+Application.DisplayAlerts = False
+Application.Calculation = xlCalculationManual
+Set Datasheet = Sheets("Data")
+Sheets("Stocks").Select
+For i = 1 To 147
+LR = Sheets("Stocks").Cells(Rows.Count, 1).End(xlUp).Row + 1
+Datasheet.Cells.Clear
+If LR > 147 Then GoTo Handler:
+With Datasheet.QueryTables.Add(Connection:="URL;http://stocks.tradingcharts.com/stocks/symbols/b/all/z/" & i, Destination:=Range("A1"))
+    .BackgroundQuery = True
+    .TablesOnlyFromHTML = False
+    .Refresh BackgroundQuery:=False
+    .SaveData = True
+End With
+
+Datasheet.Range("A1").CurrentRegion.TextToColumns Destination:=Datasheet.Range("A1"), DataType:=xlDelimited, _
+TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=True, _
+Semicolon:=False, Comma:=True, Space:=False, other:=False
+Datasheet.Range("A9:C33").Copy
+Sheets("Stocks").Range("A" & LR).PasteSpecial xlPasteValues
+
+Application.ScreenUpdating = True
+Application.Cursor = xlWait
+Application.DisplayStatusBar = True
+Application.StatusBar = "I am on page " & i & "..."
+Application.ScreenUpdating = False
+Next i
+Application.CutCopyMode = False
+Application.ScreenUpdating = True
+Application.DisplayAlerts = True
+Application.Calculation = xlCalculationAutomatic
+Handler:
+Sheets("Stocks").Rows("1:1").Delete Shift:=xlUp
+Sheets("Stocks").UsedRange.Copy
+Sheets.Add
+ActiveSheet.Range("A1").PasteSpecial xlPasteValues
+'msgbox "Done"
+End Sub
+
+Private Sub ETFs()
+Sheets.Add
+ActiveSheet.Name = "ETFs"
+Application.ScreenUpdating = True
+Application.Cursor = xlWait
+Application.DisplayStatusBar = True
+Application.StatusBar = "Getting ETFs"
+Sheets("ETFs").Cells.Clear
+Application.ScreenUpdating = False
+Application.DisplayAlerts = False
+Application.Calculation = xlCalculationManual
+With ActiveSheet.QueryTables.Add(Connection:="URL;http://www.nasdaq.com/investing/etfs/etf-finder-results.aspx?download=Yes", Destination:=Range("A1"))
+    .BackgroundQuery = True
+    .TablesOnlyFromHTML = False
+    .Refresh BackgroundQuery:=False
+    .SaveData = True
+End With
+ActiveSheet.Range("A1").CurrentRegion.TextToColumns Destination:=ActiveSheet.Range("A1"), DataType:=xlDelimited, _
+TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=True, _
+Semicolon:=False, Comma:=True, Space:=False, other:=False
+
+Application.CutCopyMode = False
+Application.ScreenUpdating = True
+Application.DisplayAlerts = True
+Application.Calculation = xlCalculationAutomatic
+
+End Sub
+Private Sub AMEX()
+Sheets.Add
+ActiveSheet.Name = "AMEX"
+Application.ScreenUpdating = True
+Application.Cursor = xlWait
+Application.DisplayStatusBar = True
+Application.StatusBar = "Getting AMEX"
+Sheets("AMEX").Cells.Clear
+Application.ScreenUpdating = False
+Application.DisplayAlerts = False
+Application.Calculation = xlCalculationManual
+With ActiveSheet.QueryTables.Add(Connection:="URL;http://www.nasdaq.com/screening/companies-by-industry.aspx?pagesize=ALL&exchange=AMEX&render=download", Destination:=Range("A1"))
+    .BackgroundQuery = True
+    .TablesOnlyFromHTML = False
+    .Refresh BackgroundQuery:=False
+    .SaveData = True
+End With
+ActiveSheet.Range("A1").CurrentRegion.TextToColumns Destination:=ActiveSheet.Range("A1"), DataType:=xlDelimited, _
+TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=True, _
+Semicolon:=False, Comma:=True, Space:=False, other:=False
+
+Application.CutCopyMode = False
+Application.ScreenUpdating = True
+Application.DisplayAlerts = True
+Application.Calculation = xlCalculationAutomatic
+End Sub
+Private Sub NYSE()
+Sheets.Add
+ActiveSheet.Name = "NYSE"
+Application.ScreenUpdating = True
+Application.Cursor = xlWait
+Application.DisplayStatusBar = True
+Application.StatusBar = "Getting NYSE"
+Sheets("NYSE").Cells.Clear
+Application.ScreenUpdating = False
+Application.DisplayAlerts = False
+Application.Calculation = xlCalculationManual
+With ActiveSheet.QueryTables.Add(Connection:="URL;http://www.nasdaq.com/screening/companies-by-industry.aspx?pagesize=ALL&exchange=NYSE&render=download", Destination:=Range("A1"))
+    .BackgroundQuery = True
+    .TablesOnlyFromHTML = False
+    .Refresh BackgroundQuery:=False
+    .SaveData = True
+End With
+ActiveSheet.Range("A1").CurrentRegion.TextToColumns Destination:=ActiveSheet.Range("A1"), DataType:=xlDelimited, _
+TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=True, _
+Semicolon:=False, Comma:=True, Space:=False, other:=False
+
+Application.CutCopyMode = False
+Application.ScreenUpdating = True
+Application.DisplayAlerts = True
+Application.Calculation = xlCalculationAutomatic
+End Sub
+Private Sub NASDAQ()
+Sheets.Add
+ActiveSheet.Name = "NASDAQ"
+Application.ScreenUpdating = True
+Application.Cursor = xlWait
+Application.DisplayStatusBar = True
+Application.StatusBar = "Getting NASDAQ"
+Sheets("NASDAQ").Cells.Clear
+Application.ScreenUpdating = False
+Application.DisplayAlerts = False
+Application.Calculation = xlCalculationManual
+With ActiveSheet.QueryTables.Add(Connection:="URL;http://www.nasdaq.com/screening/companies-by-industry.aspx?industry=ALL&exchange=NASDAQ&pagesize=200&render=download", Destination:=Range("A1"))
+    .BackgroundQuery = True
+    .TablesOnlyFromHTML = False
+    .Refresh BackgroundQuery:=False
+    .SaveData = True
+End With
+ActiveSheet.Range("A1").CurrentRegion.TextToColumns Destination:=ActiveSheet.Range("A1"), DataType:=xlDelimited, _
+TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=True, _
+Semicolon:=False, Comma:=True, Space:=False, other:=False
+
+Application.CutCopyMode = False
+Application.ScreenUpdating = True
+Application.DisplayAlerts = True
+Application.Calculation = xlCalculationAutomatic
+End Sub
+Private Sub FixNasdaqAmexEtfsNYSE()
+Application.DisplayAlerts = False
+Application.ScreenUpdating = False
+Application.EnableEvents = False
+Dim ws As Worksheet
+For Each ws In ThisWorkbook.Worksheets
+    If ws.Name = "NYSE" Or ws.Name = "AMEX" Or ws.Name = "NASDAQ" Or ws.Name = "ETFs" Then
+    ws.Select
+    Dim TheExchange As String
+    Dim LR, i, NewLR As Long
+    TheExchange = ws.Name
+    LR = ws.Cells(Rows.Count, 1).End(xlUp).Row
+    NewLR = ws.Cells(Rows.Count, 4).End(xlUp).Row
+    Range("A1:A" & LR).Copy
+    Columns("C:C").Insert Shift:=xlToRight
+    Columns("A:A").Delete
+    Columns("C:C").Insert Shift:=xlToRight
+    For i = NewLR To 2 Step -1
+        If Cells(i, 4).Value <> "" Then
+            Cells(i, 4).Offset(0, -1).Value = TheExchange
+        End If
+    Next i
+    ws.Cells(1, 3).Value = "Exchange"
+    End If
+Next ws
+Application.DisplayAlerts = True
+Application.ScreenUpdating = True
+Application.EnableEvents = True
+End Sub
+Private Sub AllSheetsTogether()
+Application.ScreenUpdating = True
+Application.Cursor = xlWait
+Application.DisplayStatusBar = True
+Application.StatusBar = "Compiling Tickers"
+Application.DisplayAlerts = False
+Application.ScreenUpdating = False
+On Error Resume Next
+Sheets("Compiled Tickers").Delete
+Application.DisplayAlerts = True
+Dim ws As Worksheet
+Sheets.Add
+ActiveSheet.Name = "Compiled Tickers"
+For Each ws In ThisWorkbook.Worksheets
+    If ws.Name <> "Stocks" And ws.Name <> "Data" And ws.Name <> "Compiled Tickers" Then
+    ws.Select
+        With ws
+            Dim LastRow As Long
+                LastRow = ws.Cells(Rows.Count, 3).End(xlUp).Row
+                ws.Range("A1:C" & LastRow).Copy
+            LR = Sheets("Compiled Tickers").Cells(Rows.Count, 1).End(xlUp).Row + 1
+            Sheets("Compiled Tickers").Range("A" & LR).PasteSpecial xlPasteValues
+            Application.CutCopyMode = False
+        End With
+    End If
+Next
+Sheets("Compiled Tickers").Select
+Dim i As Long
+Dim lRow As Long
+lRow = ActiveSheet.Cells.Find("*", searchorder:=xlByRows, searchdirection:=xlPrevious).Row
+For i = lRow To 1 Step -1
+    If Cells(i, 1).Value = "" Or Cells(i, 1).Value = "QUICK QUOTE" Or Cells(i, 1).Value = "Symbol: " Or Cells(i, 1).Value = "Name" Then Rows(i).EntireRow.Delete Shift:=xlUp
+    If Cells(i, 2).Value = "" Then Rows(i).EntireRow.Delete Shift:=xlUp
+    If Cells(i, 3).Value = "" Or Cells(i, 3).Value = "Search for symbols" Then Rows(i).EntireRow.Delete Shift:=xlUp
+Next i
+Application.DisplayAlerts = True
+Application.ScreenUpdating = True
+End Sub
+
+Private Sub SortTickersAlphabetically()
+Application.ScreenUpdating = True
+Application.Cursor = xlWait
+Application.DisplayStatusBar = True
+Application.StatusBar = "Sorting..."
+Sheets("Compiled Tickers").Select
+Dim MyRNG As Range
+LR = Sheets("Compiled Tickers").Cells(Rows.Count, 3).End(xlUp).Row
+Set MyRNG = Sheets("Compiled Tickers").Range("A1:C" & LR)
+
+ActiveWorkbook.Worksheets("Compiled Tickers").Sort.SortFields.Clear
+ActiveWorkbook.Worksheets("Compiled Tickers").Sort.SortFields.Add Key:=Range("B1"), SortOn:=xlSortOnValues, Order:=xlAscending, DataOption:=xlSortNormal
+    With ActiveWorkbook.Worksheets("Compiled Tickers").Sort
+        .SetRange MyRNG
+        .Header = xlGuess
+        .MatchCase = False
+        .Orientation = xlTopToBottom
+        .SortMethod = xlPinYin
+        .Apply
+    End With
+Dim RNG As Range
+    With ActiveSheet
+        Set RNG = Range("A1", Range("C1").End(xlDown))
+        RNG.RemoveDuplicates Columns:=Array(1, 2), Header:=xlNo
+    End With
+
+End Sub
+Private Sub GetTickersReadyToPassToYahoo()
+Application.ScreenUpdating = True
+Application.Cursor = xlWait
+Application.DisplayStatusBar = True
+Application.StatusBar = "Sorting Tickers to pass to Yahoo..."
+
+Sheets.Add
+ActiveSheet.Name = "Stock Tickers and Data"
+Application.ScreenUpdating = False
+Application.DisplayAlerts = False
+Application.Calculation = xlCalculationManual
+Dim ws As Worksheet: Set ws = Sheets("Compiled Tickers")
+ws.Select
+DoEvents
+ws.Columns("F:F").Delete Shift:=xlToLeft
+With ws
+Dim LR As Long
+LR = ws.Cells.Find("*", searchorder:=xlByRows, searchdirection:=xlPrevious).Row
+ws.Range("B1:B" & LR).Copy
+ws.Range("D1").PasteSpecial xlPasteValues
+Application.CutCopyMode = False
+
+Dim i As Long, j As Long, k As Long
+For i = 1 To LR Step 2
+    For j = 2 To LR Step 2
+        For k = 1 To 180
+            If Cells(1, 2).Value <> "" Then
+            Cells(k, 6).Value = " " & Cells(k, 6).Value & " " & Cells(i + j, 2).Value & " " & Cells(i, 2).Value & " " & Cells(j, 2).Value & " "
+            Cells(k, 6).Value = Trim(Cells(k, 6).Value)
+            Cells(i, 2).Delete Shift:=xlUp
+            Cells(j, 2).Delete Shift:=xlUp
+            ElseIf Cells(1, 2).Value = "" Then GoTo Handler
+            End If
+        Next
+    Next
+Next
+Handler:
+ws.Range("D1:D" & LR).Cut ws.Range("B1") '.PasteSpecial xlPasteValues
+End With
+Application.ScreenUpdating = True
+Application.DisplayAlerts = True
+Application.Calculation = xlAutomatic
+
+
+Application.ScreenUpdating = True
+Application.Cursor = xlWait
+Application.DisplayStatusBar = True
+Application.StatusBar = "Passing Data to Yahoo..."
+Application.ScreenUpdating = False
+'Sheets("TickerCopy").Range("B1:B6015").Copy ws.Range("B1")
+Dim cell, List As Range: Set List = ws.Range("F1:F180")
+For Each cell In List
+    Trim (cell)
+    GetYahooAtrributes (cell)
+Next cell
+
+End Sub
+Private Sub GetYahooAtrributes(cell)
+Sheets("Data").Cells.Clear
+'create a web query in the current worksheet
+'connect to the web, retrieve data, and paste it in the worksheet as static text
+'Sheets("Attributes").Cells.Clear
+Application.ScreenUpdating = False
+Application.DisplayAlerts = False
+Application.Calculation = xlCalculationManual
+Dim Symbol As String
+Dim Attribs As String
+Symbol = cell
+Attribs = "snxp2l1m4m3kjwva2t8ohgmc1pcm5m6m7m8k4k5j5j6b4rr5s7p6p5ydr1qej4j1f6aa5bb6ld1k3t1e9e7r6e8r7c8g3b2b3c6k2c3m2w1w4l2g4g6g1g5v1v7k1l3j3in4i5r2p1s1t7d2t6"
+On Error GoTo Handler:
+Handler:
+With Sheets("Data").QueryTables.Add _
+(Connection:="URL;http://download.finance.yahoo.com/d/quotes.csv?s=" & Symbol & "&f=" & Attribs & "&e=.csv", Destination:=Sheets("Data").Range("A1"))
+    .Name = "Attributes"
+    .BackgroundQuery = True
+    .TablesOnlyFromHTML = False
+    .Refresh BackgroundQuery:=False
+    .SaveData = True
+End With
+
+With Sheets("Data")
+Sheets("Data").Range("A1").CurrentRegion.TextToColumns Destination:=Sheets("Data").Range("A1"), DataType:=xlDelimited, _
+TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=True, Semicolon:=False, Comma:=True, Space:=False, other:=False
+End With
+MoveToStockSheet (cell)
+Application.ScreenUpdating = True
+Application.DisplayAlerts = True
+Application.Calculation = xlCalculationAutomatic
+ActiveSheet.Columns.AutoFit
+
+End Sub
+Private Sub MoveToStockSheet(cell)
+Dim ws As Worksheet, ws1 As Worksheet
+Set ws = Sheets("Stock Tickers and Data")
+Dim LR As Long
+LR = ws.Cells(Rows.Count, 1).End(xlUp).Row
+Set ws1 = Sheets("Data")
+ws1.Select
+ws1.Range(ws1.UsedRange.Address).Copy
+ws.Range("A" & LR).Offset(1, 0).PasteSpecial xlPasteValues
+Application.CutCopyMode = False
+ws.Select
+End Sub
+Private Sub GetHeaderRowForYahooData()
+Sheets("Stock Tickers and Data").Select
+ActiveSheet.Range("A1").Value = "Symbol"
+ActiveSheet.Range("B1").Value = "Name"
+ActiveSheet.Range("C1").Value = "Stock Exchange"
+ActiveSheet.Range("D1").Value = "Change in Percent"
+ActiveSheet.Range("E1").Value = "Last Trade (Price Only)"
+ActiveSheet.Range("F1").Value = "200-day Moving Average"
+ActiveSheet.Range("G1").Value = "50-day Moving Average"
+ActiveSheet.Range("H1").Value = "52-week High"
+ActiveSheet.Range("I1").Value = "52-week Low"
+ActiveSheet.Range("J1").Value = "52-week Range"
+ActiveSheet.Range("K1").Value = "Volume"
+ActiveSheet.Range("L1").Value = "Average Daily Volume"
+ActiveSheet.Range("M1").Value = "1 yr Target Price"
+ActiveSheet.Range("N1").Value = "Open"
+ActiveSheet.Range("O1").Value = "Day's High"
+ActiveSheet.Range("P1").Value = "Day's Low"
+ActiveSheet.Range("Q1").Value = "Day's Range"
+ActiveSheet.Range("R1").Value = "Change"
+ActiveSheet.Range("S1").Value = "Previous Close"
+ActiveSheet.Range("T1").Value = "Change & Percent Change"
+ActiveSheet.Range("U1").Value = "Change From 200-day Moving Average"
+ActiveSheet.Range("V1").Value = "Percent Change From 200-day Moving Average"
+ActiveSheet.Range("W1").Value = "Change From 50-day Moving Average"
+ActiveSheet.Range("X1").Value = "Percent Change From 50-day Moving Average"
+ActiveSheet.Range("Y1").Value = "Change From 52-week High"
+ActiveSheet.Range("Z1").Value = "Percent Change From 52-week High"
+ActiveSheet.Range("AA1").Value = "Change From 52-week Low"
+ActiveSheet.Range("AB1").Value = "Percent Change From 52-week Low"
+ActiveSheet.Range("AC1").Value = "Book Value"
+ActiveSheet.Range("AD1").Value = "P/E Ratio"
+ActiveSheet.Range("AE1").Value = "PEG Ratio"
+ActiveSheet.Range("AF1").Value = "Short Ratio"
+ActiveSheet.Range("AG1").Value = "Price/Book"
+ActiveSheet.Range("AH1").Value = "Price/Sales"
+ActiveSheet.Range("AI1").Value = "Dividend Yield"
+ActiveSheet.Range("AJ1").Value = "Dividend/Share"
+ActiveSheet.Range("AK1").Value = "Dividend Pay Date"
+ActiveSheet.Range("AL1").Value = "Ex-Dividend Date"
+ActiveSheet.Range("AM1").Value = "Earnings/Share"
+ActiveSheet.Range("AN1").Value = "EBITDA"
+ActiveSheet.Range("AO1").Value = "Market Capitalization"
+ActiveSheet.Range("AP1").Value = "Float Shares"
+ActiveSheet.Range("AQ1").Value = "Ask"
+ActiveSheet.Range("AR1").Value = "Ask Size"
+ActiveSheet.Range("AS1").Value = "Bid"
+ActiveSheet.Range("AT1").Value = "Bid Size"
+ActiveSheet.Range("AU1").Value = "Last Trade (With Time)"
+ActiveSheet.Range("AV1").Value = "Last Trade Date"
+ActiveSheet.Range("AW1").Value = "Last Trade Size"
+ActiveSheet.Range("AX1").Value = "Last Trade Time"
+ActiveSheet.Range("AY1").Value = "EPS Estimate Next Quarter"
+ActiveSheet.Range("AZ1").Value = "EPS Estimate Current Year"
+ActiveSheet.Range("BA1").Value = "Price/EPS Estimate Current Year"
+ActiveSheet.Range("BB1").Value = "EPS Estimate Next Year"
+ActiveSheet.Range("BC1").Value = "Price/EPS Estimate Next Year"
+ActiveSheet.Range("BD1").Value = "After Hours Change (Real-time)"
+ActiveSheet.Range("BE1").Value = "Annualized Gain"
+ActiveSheet.Range("BF1").Value = "Ask (Real-time)"
+ActiveSheet.Range("BG1").Value = "Bid (Real-time)"
+ActiveSheet.Range("BH1").Value = "Change (Real-time)"
+ActiveSheet.Range("BI1").Value = "Change Percent (Real-time)"
+ActiveSheet.Range("BJ1").Value = "Commission"
+FormatNames
+End Sub
+
+Private Sub FormatNames()
+Dim cell, RNG As Range
+Dim LR, LastR As Long
+Sheets("Compiled Tickers").Select
+LastR = Sheets("Compiled Tickers").Cells(Rows.Count, 1).End(xlUp).Row
+Sheets("Compiled Tickers").Columns("A:A").Copy
+Sheets("Compiled Tickers").Columns("C:C").Insert Shift:=xlToRight
+Sheets("Stock Tickers and Data").Select
+Columns("C:C").Insert Shift:=xlRight
+
+LR = Sheets("Stock Tickers and Data").Cells(Rows.Count, 2).End(xlUp).Row
+Set RNG = Range(Cells(2, 2), Cells(LR, 2))
+For Each cell In RNG
+    If cell.Value = "N/A" Then
+        cell.Offset(0, 1).FormulaR1C1 = "=IF(RC[-1]=""N/A"",VLOOKUP(RC[-2],'Compiled Tickers'!R1C[-1]:R13757C,2),RC[-1])"
+    ElseIf cell.Value <> "N/A" Then cell.Offset(0, 1).Value = cell.Value
+    End If
+Next
+RNG.Offset(0, 1).Select
+Selection.Copy
+Selection.PasteSpecial Paste:=xlValues, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
+Columns("B:B").Delete Shift:=xlLeft
+Range("B1").Value = "Name"
+Sheets("Compiled Tickers").Columns("C:C").Delete Shift:=xlToLeft
+FormatExchanges
+End Sub
+Private Sub FormatExchanges()
+Dim cell, RNG2 As Range
+Dim lRow As Long
+Sheets("Stock Tickers and Data").Select
+Columns("D:D").Insert Shift:=xlRight
+lRow = Sheets("Stock Tickers and Data").Cells(Rows.Count, 3).End(xlUp).Row
+Set RNG2 = Range(Cells(2, 3), Cells(lRow, 3))
+For Each cell In RNG2
+    If cell.Value = "N/A" Then
+        cell.Offset(0, 1).FormulaR1C1 = "=IF(RC[-1]=""N/A"",VLOOKUP(RC[-3],'Compiled Tickers'!R1C[-2]:R13757C[-1],2),RC[-1])"
+    ElseIf cell.Value <> "N/A" Then cell.Offset(0, 1).Value = cell.Value
+    End If
+Next
+RNG2.Offset(0, 1).Select
+Selection.Copy
+Selection.PasteSpecial Paste:=xlValues, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
+Columns("C:C").Delete Shift:=xlLeft
+Range("C1").Value = "Exchange"
+End Sub
+Private Sub ApplyFormattingToDataGathered()
+Sheets("Stock Tickers and Data").Select
+Application.ScreenUpdating = False
+Application.DisplayAlerts = False
+Application.Calculation = xlCalculationManual
+With ActiveSheet
+Dim LR, LC, i As Long
+LR = ActiveSheet.Cells(Rows.Count, 1).End(xlUp).Row
+LC = ActiveSheet.Cells(1, Columns.Count).End(xlToLeft).Column
+Dim RNG, cell As Range
+Set RNG = ActiveSheet.Range(Cells(2, 1), Cells(LR, 1))
+RNG.Offset(0, 3).Select
+With Selection
+    .NumberFormat = "0.00%"
+    .Value = .Value
+End With
+For i = 3 To 8
+    RNG.Offset(0, i + 1).Style = "currency"
+Next
+For Each cell In RNG.Offset(0, 9)
+    If cell.Value = "N/A" Then
+    cell.Value = cell.Value
+    ElseIf cell.Value <> "N/A" Then
+    cell.Formula = "=abs(" & cell.Value & ")"
+    End If
+Next cell
+Range("J1").Value = "52 Week Change"
+For Each cell In RNG.Offset(0, 16)
+    If cell.Value = "N/A" Then
+    cell.Value = cell.Value
+    ElseIf cell.Value <> "N/A" Then
+    cell.Formula = "=abs(" & cell.Value & ")"
+    End If
+Next cell
+Range("Q1").Value = "Day's High to Low Change"
+For i = 11 To 19
+    RNG.Offset(0, i + 1).Style = "Currency"
+Next
+
+RNG.Offset(0, 21).Style = "Percent"
+RNG.Offset(0, 22).Style = "Currency"
+RNG.Offset(0, 23).Style = "Percent"
+RNG.Offset(0, 24).Style = "Currency"
+RNG.Offset(0, 25).Style = "Percent"
+RNG.Offset(0, 26).Style = "Currency"
+RNG.Offset(0, 27).Style = "Percent"
+For i = 27 To 34
+ RNG.Offset(0, i + 1).Style = "Currency"
+Next
+RNG.Offset(0, 36).Select
+With Selection
+    .NumberFormat = "MM/DD/YYYY"
+    .Value = .Value
+End With
+RNG.Offset(0, 37).Select
+With Selection
+    .NumberFormat = "MM/DD/YYYY"
+    .Value = .Value
+End With
+RNG.Offset(0, 47).Select
+With Selection
+    .NumberFormat = "MM/DD/YYYY"
+    .Value = .Value
+End With
+RNG.Offset(0, 38).Style = "Currency"
+RNG.Offset(0, 39).Style = "Currency"
+RNG.Offset(0, 40).Style = "Currency"
+RNG.Offset(0, 42).Style = "Currency"
+RNG.Offset(0, 44).Style = "Currency"
+For i = 49 To 53
+    RNG.Offset(0, i + 1).Style = "Currency"
+Next
+Columns("BD:CF").Delete Shift:=xlToLeft
+End With
+ActiveSheet.Columns.AutoFit
+Application.ScreenUpdating = True
+Application.DisplayAlerts = True
+Application.Calculation = xlAutomatic
+End Sub
+Sub CorrectExchangeColumn()
+TrimValues
+Dim cell, RNG, RNG2 As Range
+LR = Cells(Rows.Count, 3).End(xlUp).Row
+Set RNG = Range("C1:C" & LR)
+RNG.Select
+  For Each cell In RNG
+        If cell.Value = "New York Stock Exchange" Then cell.Value = "NYSE"
+        If cell.Value = "Nasdaq Stock Exchange" Then cell.Value = "NASDAQ"
+        If cell.Value = "American Stock Exchange" Then cell.Value = "AMEX"
+        If cell.Value = "Fund" Then cell.Value = "Mutual Fund"
+  Next
+End Sub
+Sub TrimValues()
+Sheets("Compiled Tickers").Select
+    Dim c As Range
+        For Each c In Cells.SpecialCells(xlCellTypeConstants, 3)
+            c.Value = Trim(c.Value)
+        Next c
+End Sub
+Sub CompiledAMEXNYSENASDAQ()
+Sheets.Add
+ActiveSheet.Name = "AmexNasdaqNYSE"
+Dim ws, ws1, ws2, ws3, ws4 As Worksheet
+
+Set ws1 = Sheets("Nasdaq")
+Set ws2 = Sheets("AMEX")
+Set ws3 = Sheets("NYSE")
+Set ws4 = Sheets("AmexNasdaqNYSE")
+Dim LastRow As Long
+
+
+ws1.Select
+LR = ActiveSheet.Cells.Find("*", searchorder:=xlByRows, searchdirection:=xlPrevious).Row
+ws1.Range("A2:I" & LR).Copy
+ws4.Range("A1").PasteSpecial xlPasteValues
+
+LastRow = ws4.Cells.Find("*", searchorder:=xlByRows, searchdirection:=xlPrevious).Row
+ws2.Select
+Application.CutCopyMode = False
+LR = ActiveSheet.Cells.Find("*", searchorder:=xlByRows, searchdirection:=xlPrevious).Row
+ws2.Range("A2:I" & LR).Copy
+ws4.Range("A" & LastRow).PasteSpecial xlPasteValues
+Application.CutCopyMode = False
+
+LastRow = ws4.Cells.Find("*", searchorder:=xlByRows, searchdirection:=xlPrevious).Row
+ws3.Select
+LR = ActiveSheet.Cells.Find("*", searchorder:=xlByRows, searchdirection:=xlPrevious).Row
+ws3.Range("A2:I" & LR).Copy
+ws4.Range("A" & LastRow).PasteSpecial xlPasteValues
+Application.CutCopyMode = False
+ws1.Range("A1:I1").Copy
+ws4.Rows("1:1").Insert
+ws4.Range("A1").PasteSpecial xlPasteValues
+Application.DisplayAlerts = False
+ws1.Delete
+ws2.Delete
+ws3.Delete
+Sheets("Data").Delete
+Application.DisplayAlerts = True
+End Sub
+Private Sub MoveEtfsToNYSEAMEXNASDAQandCompareLastSaleonStockDataSheet()
+Dim WSExch As Worksheet: Set WSExch = Sheets("AmexNasdaqNYSE")
+
+Dim WSetf As Worksheet: Set WSetf = Sheets("ETFs")
+WSetf.Select
+Dim RNG As Range
+LR = WSetf.Cells(Rows.Count, 4).End(xlUp).Row
+Set RNG = WSetf.Range("A2:D" & LR)
+RNG.Copy
+WSExch.Select
+Dim LastRowExchange As Long
+LastRowExchange = WSExch.Cells(Rows.Count, 1).End(xlUp).Row + 1
+WSExch.Range("A" & LastRowExchange).PasteSpecial xlPasteValues
+Application.CutCopyMode = False
+FixLastTradePriceForTheStockDataSheet
+End Sub
+Private Sub FixLastTradePriceForTheStockDataSheet()
+
+Sheets("Stock Tickers and Data").Select
+LR = ActiveSheet.Cells.Find("*", searchorder:=xlByRows, searchdirection:=xlPrevious).Row
+Columns("F:F").Insert Shift:=xlToRight
+Dim RNG, cell As Range: Set RNG = ActiveSheet.Range("E2:E" & LR)
+
+For Each cell In RNG
+    If cell.Value = "N/A" Then cell.Offset(0, 1).FormulaR1C1 = "=IF(RC[-1]=""N/A"",VLOOKUP(RC[-5],AmexNasdaqNYSE!R1C[-5]:R8119C[-2],4),RC[-1])" 'And cell.FormatConditions = "currency"
+    If cell.Value <> "N/A" Then cell.Offset(0, 1).Value = cell.Value
+Next cell
+RNG.Offset(0, 1).Copy
+RNG.Offset(0, 1).PasteSpecial xlPasteValues
+ActiveSheet.Columns("E:E").Delete Shift:=xlToLeft
+Range("E1").Value = "Last Trade (Price Only)"
+MakeColumnECurrency
+End Sub
+Sub MakeColumnECurrency()
+Sheets("Stock Tickers and Data").Select
+LR = ActiveSheet.Cells.Find("*", searchorder:=xlByRows, searchdirection:=xlPrevious).Row
+Dim RNG, cell As Range: Set RNG = ActiveSheet.Range("E2:E" & LR)
+RNG.Style = "Currency"
+End Sub
