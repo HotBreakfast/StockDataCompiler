@@ -1,2 +1,2 @@
 # StockDataCompiler
-This is a Macro Enabled Workbook that Compiles Data Using Yahoo Finance API's and All Ticker Symbols
+##Excel Workbooks that get stock info using various API's and URL queries in VBA
