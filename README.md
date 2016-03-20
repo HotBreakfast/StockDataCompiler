@@ -1,7 +1,7 @@
 # Stock Data Compiler
 ##Excel Workbook that gets stock info using various API's and URL queries in VBA
 ###Open New Workbook with one worksheet named "Stocks"
-#[Copy and paste]:  (http://www.youtube.com/watch?v=_o4Evn7evhg "Copy and Paste (tutuorial)")
+#Copy and Paste! [Copy and paste]:  (http://www.youtube.com/watch?v=_o4Evn7evhg "tutuorial)")
 
 [the code]:(StockDataCompiler/README.md)
 [copy me]       (http://raw.githubusercontent.com/HotBreakfast/StockDataCompiler/master/GetAllStockInfoCode "This Code") into a new VBA [module]  (http://www.addintools.com/documents/excel/how-to-add-developer-tab.html "Module") using excel
