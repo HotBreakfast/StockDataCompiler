@@ -3,7 +3,7 @@
 ###Open New Workbook with one worksheet named "Stocks"
 #Copy and paste 
 [the code]:(StockDataCompiler/README.md)
-[copy me]       (http://raw.githubusercontent.com/HotBreakfast/StockDataCompiler/master/GetAllStockInfoCode "This Code") into a new VBA module using excel
+[copy me]       (http://raw.githubusercontent.com/HotBreakfast/StockDataCompiler/master/GetAllStockInfoCode "This Code") into a new VBA [module]  (http://www.addintools.com/documents/excel/how-to-add-developer-tab.html "Module") using excel
 #In the workbook module paste the following:
 
 ###Private Sub Workbook_Open()
