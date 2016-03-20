@@ -17,5 +17,6 @@ End If
 End If
 End Sub
 
-''close and save workbook, open the workbook and it will ask you if you would like to run the code _
-<P/>''***run the code and wait 25 minutes to get all stock data***</P>
+''close and save workbook as .xlms, open the workbook and it will ask you if you would like to run the code _
+<P/>''***Upon opening the workbook you will know if you have done it correctly if you are asked a question to run the code
+###run the code and wait 25 minutes to get all stock data***</P>
