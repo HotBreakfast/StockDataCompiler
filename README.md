@@ -18,5 +18,5 @@
 ###End Sub
 
 ''close and save workbook as .xlsm, open the workbook and it will ask you if you would like to run the code _
-<P/>''***Upon opening the workbook you will know if you have done it correctly if you are asked a question to run the code _
-'run the code and wait 25 minutes to get all stock data***</P>
+<P/>''***Upon opening the workbook you will know if you have done it correctly _ 
+'if you are asked a question to run the code run the code and wait 25 minutes to get all stock data***</P>
