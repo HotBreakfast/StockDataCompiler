@@ -14,3 +14,6 @@ If MyCode = vbNo Then
 End If
 End If
 End Sub
+
+''close and save workbook, open the workbook and it will ask you if you would like to run the code _
+''***run the code and wait 25 minutes to get all stock data***
